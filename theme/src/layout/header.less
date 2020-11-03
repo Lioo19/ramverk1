@@ -1,0 +1,71 @@
+/**
+ * A header style for dbwebb.se.
+ */
+@bgColorHeader: #323232;
+@colorHeader: #ffffff;
+@bgColorHeaderBorder: #666;
+
+.outer-wrap-header {
+    height: @magicNumber * 2;
+    margin-bottom: @magicNumber / 2;
+
+    img {
+        outline: 0;
+    }
+ }
+
+.inner-wrap-header {
+    max-width: none;
+
+    .row {
+        max-width: 100%;
+    }
+}
+
+
+.region-header-col-1 {
+    #desinax-vgrid .column(6);
+}
+
+.region-header-col-2 {
+    #desinax-vgrid .column(13);
+    margin-top: .4em;
+}
+
+.region-header-col-3 {
+    #desinax-vgrid .column(5);
+}
+
+@media screen and (max-width: 1300px) {
+    .region-header-col-2 {
+        #desinax-vgrid .column(17);
+    }
+
+    .region-header-col-3 {
+        #desinax-vgrid .column(2);
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .region-header-col-1 {
+        #desinax-vgrid .column(5);
+    }
+
+    .region-header-col-2 {
+        #desinax-vgrid .column(16);
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .region-header-col-1 {
+        #desinax-vgrid .column(16);
+    }
+
+    .region-header-col-2 {
+        display: none;
+    }
+
+    .region-header-col-3 {
+        #desinax-vgrid .column(8);
+    }
+}
