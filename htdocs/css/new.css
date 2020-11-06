@@ -6977,6 +6977,14 @@ a.rm-button.rm-clicked .rm-button-face-2 {
   padding: 0.2em;
   border-bottom: none;
 }
+code {
+  background-color: #0e5786 !important;
+  border: none !important;
+}
+.toc .selected {
+  border-radius: 5px;
+  padding: 1px;
+}
 /**
  * My settings.
  */

@@ -255,7 +255,8 @@ install-tools-php:
 
 	curl -Lso $(PHPCBF) https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar && chmod 755 $(PHPCBF)
 
-	curl -Lso $(PHPMD) https://github.com/phpmd/phpmd/releases/download/2.7.0/phpmd.phar && chmod 755 $(PHPMD)
+	# curl -Lso $(PHPMD) https://github.com/phpmd/phpmd/releases/download/2.7.0/phpmd.phar && chmod 755 $(PHPMD)
+	curl -Lso $(PHPMD) https://github.com/phpmd/phpmd/releases/download/2.8.1/phpmd.phar && chmod 755 $(PHPMD)
 	# curl -Lso $(PHPMD) http://static.phpmd.org/php/latest/phpmd.phar && chmod 755 $(PHPMD)
 	# curl -Lso $(PHPMD) http://www.student.bth.se/~mosstud/download/phpmd.phar && chmod 755 $(PHPMD)
 
@@ -428,7 +429,7 @@ theme:
 # #
 # # Cimage
 # #
-# 
+#
 # define CIMAGE_CONFIG
 # <?php
 # return [
@@ -439,7 +440,7 @@ theme:
 # ];
 # endef
 # export CIMAGE_CONFIG
-# 
+#
 # define GIT_IGNORE_FILES
 # # Ignore everything in this directory
 # *
@@ -447,7 +448,7 @@ theme:
 # !.gitignore
 # endef
 # export GIT_IGNORE_FILES
-# 
+#
 # # target: cimage-install          - Install Cimage in htdocs
 # .PHONY: cimage-install
 # cimage-install:
@@ -458,7 +459,7 @@ theme:
 # 	cp vendor/mos/cimage/webroot/img.php htdocs/cimage
 # 	cp vendor/mos/cimage/webroot/img/car.png htdocs/img/
 # 	touch htdocs/cimage/img_config.php
-# 
+#
 # # target: cimage-update           - Update Cimage to latest version.
 # .PHONY: cimage-update
 # cimage-update:
@@ -470,7 +471,7 @@ theme:
 # 	cp vendor/mos/cimage/webroot/img.php htdocs/cimage
 # 	cp vendor/mos/cimage/webroot/img/car.png htdocs/img/
 # 	touch htdocs/cimage/img_config.php
-# 
+#
 # # target: cimage-config-create    - Create configfile for Cimage.
 # .PHONY: cimage-config-create
 # cimage-config-create:
