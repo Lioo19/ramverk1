@@ -3,6 +3,7 @@ namespace Anax\Controller;
 
 /**
  * Class for checking IP-adress to ip4 and ip6 standard.
+ * Class only contain methods for checking
  *
  */
 class Iptest
@@ -11,8 +12,6 @@ class Iptest
     * @var string $ipinput   userinputted ip
     */
     private $ipinput;
-    protected $ip4;
-    protected $ip6;
 
     /**
      * Constructor to assign user input
@@ -21,42 +20,32 @@ class Iptest
      */
     public function __construct(string $ipinp = "")
     {
-        // if (!(is_int($nrOfSides) || $nrOfSides > 0)) {
-        //     throw new SidesException("Sides on dice need to be at least 1");
-        // }
 
         $this->ipinput = $ipinp;
     }
 
     /**
-    * method for checking IP4
-    * @return bool $ip4
+    * method for checking Ip4
+    * @return bool if valid, return true
     */
-    public function ip4check()
+    public function ip4test()
     {
-        $this->thrown = rand(1, $this->sides);
-        $this->lastRoll = $this->thrown;
-        return $this->lastRoll;
+        if (filter_var($this->ipinput, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            return true;
+        }
+        return false;
     }
 
     /**
-    * method for checking IP4
-    * @return bool $ip4
+    * method for checking Ip6
+    * IF THE CHECK WORKS, TRY MAKE ONE FUNCTION OUT OF THESE
+    * @return bool if valid, return true
     */
-    public function ip4check()
+    public function ip6test()
     {
-        $this->thrown = rand(1, $this->sides);
-        $this->lastRoll = $this->thrown;
-        return $this->lastRoll;
-    }
-
-    /**
-    * method to access the lastroll
-    *
-    * @return int $lastRoll
-    */
-    public function getLastRoll()
-    {
-        return $this->lastRoll;
+        if (filter_var($this->ipinput, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            return true;
+        }
+        return false;
     }
 }

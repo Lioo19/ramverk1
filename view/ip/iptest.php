@@ -13,9 +13,9 @@ namespace Anax\View;
     <title>100</title>
 </head>
 
-<h1> BLEPP </h1>
+<h1> Validera din ip-adress </h1>
 
-<form id="ipform" method="POST">
+<form method="POST" action="ip/validation">
     <label>
         Vad har du för ip-adress?
     </label>
@@ -29,5 +29,5 @@ namespace Anax\View;
 
 
 
-<pre>
-<?= var_dump($_POST); ?>
+<!-- <pre>
+<?= var_dump($_POST); ?> -->

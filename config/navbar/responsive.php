@@ -46,7 +46,7 @@ return [
         ],
         [
             "text" => "Ip-test",
-            "url" => "ip-test",
+            "url" => "ip",
             "title" => "Test för Ip-adress",
         ],
     ],

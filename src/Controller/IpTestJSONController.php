@@ -14,7 +14,7 @@ use Anax\Controller\Iptest;
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class IpTestController implements ContainerInjectableInterface
+class IpTestJSONController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 

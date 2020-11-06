@@ -6,7 +6,7 @@ return [
     "routes" => [
         [
             "info" => "IP",
-            "mount" => "ip-test",
+            "mount" => "ip",
             "handler" => "\Anax\Controller\IpTestController",
         ],
     ]
