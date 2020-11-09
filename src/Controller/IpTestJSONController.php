@@ -4,7 +4,7 @@ namespace Anax\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Anax\Controller\Iptest;
+use Anax\Controller\IpTest;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -55,7 +55,7 @@ class IpTestJSONController implements ContainerInjectableInterface
         $userip = $request->getGet("ip", "Ingen ip angiven");
 
         if ($userip) {
-            $validation = new Iptest($userip);
+            $validation = new IpTest($userip);
             $ip4 = $validation->ip4test();
             $ip6 = $validation->ip6test();
         }
