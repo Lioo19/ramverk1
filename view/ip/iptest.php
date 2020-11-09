@@ -27,6 +27,21 @@ namespace Anax\View;
     <input type="submit" class="submitbutton" value="Validera"></input>
 </form>
 
+<div>
+    <p>Om du hellre vill validera din IP via din URL går det också bra.
+        <br>
+        Detta gör du genom att skicka en GET-request, likt följande exempel: </p>
+    <p><i> GET /ip-json?ip=216.58.211.142</i></p>
+    <pre>
+    {
+        "ip": "216.58.211.142",
+        "ip4": "true"
+        "ip6": "false"
+        "host": "arn09s10-in-f14.1e100.net"
+    }
+    </pre>
+</div>
+
 
 
 <!-- <pre>
