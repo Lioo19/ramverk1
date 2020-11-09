@@ -6,7 +6,7 @@ namespace Anax\Controller;
  * Class only contain methods for checking
  *
  */
-class Iptest
+class IpTest
 {
     /**
     * @var string $ipinput   userinputted ip
@@ -38,7 +38,6 @@ class Iptest
 
     /**
     * method for checking Ip6
-    * IF THE CHECK WORKS, TRY MAKE ONE FUNCTION OUT OF THESE
     * @return bool if valid, return true
     */
     public function ip6test()

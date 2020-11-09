@@ -40,27 +40,6 @@ class IpTestJSONController implements ContainerInjectableInterface
         $this->db = "active";
     }
 
-    public function getDetailsOnRequest(
-        string $method,
-        array $args = []
-    ) : string {
-                $request        = $this->di->get("request");
-                $path           = $request->getRoute();
-                $httpMethod     = $request->getMethod();
-                $numArgs        = count($args);
-                $strArgs        = implode(", ", $args);
-                $queryString    = http_build_query($request->getGet(), '', ', ');
-
-                return <<<EOD
-                    <h1>$method</h1>
-
-                    <p>The request was '$path' ($httpMethod).</p>
-                    <p>Got '$numArgs' arguments: '$strArgs'.</p>
-                    <p>Query string contains: '$queryString'.</p>
-                    <p>\$db is '{$this->db}'.</p>
-                EOD;
-    }
-
     /**
      * This is the index method action, it handles:
      * ANY METHOD mountpoint
@@ -69,7 +48,7 @@ class IpTestJSONController implements ContainerInjectableInterface
      *
      * @return string
      */
-    public function indexAction() : array
+    public function indexActionGet() : array
     {
         $request = $this->di->get("request");
         //request to get GET-info

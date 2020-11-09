@@ -6,11 +6,11 @@ use Anax\DI\DIFactoryConfig;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test the FlatFileContentController.
+ * Test the SampleJsonController.
  */
-class FlatFileContentControllerTest extends TestCase
+class IpTestJSONControllerTest extends TestCase
 {
-    
+
     // Create the di container.
     protected $di;
     protected $controller;
@@ -35,9 +35,9 @@ class FlatFileContentControllerTest extends TestCase
         $di = $this->di;
 
         // Setup the controller
-        $this->controller = new FlatFileContentController();
+        $this->controller = new IpTestJSONController();
         $this->controller->setDI($this->di);
-        //$this->controller->initialize();
+        $this->controller->initialize();
     }
 
 
@@ -47,11 +47,27 @@ class FlatFileContentControllerTest extends TestCase
      */
     public function testIndexAction()
     {
-        $res = $this->controller->catchAll();
-        $this->assertInstanceOf("\Anax\Response\Response", $res);
+        $res = $this->controller->indexActionGet();
+        $this->assertIsArray($res);
+        $this->assertInternalType("array", $res);
 
-        $body = $res->getBody();
-        $exp = "| ramverk1</title>";
-        $this->assertContains($exp, $body);
+        $json = $res[0];
+        $exp = "Ej";
+        $this->assertContains($exp, $json["host"]);
+    }
+
+    /**
+     * Test the route "index".
+     */
+    public function testIndexActionGetReq()
+    {
+        global $di;
+        
+        $req = $di->get("request");
+        $req->setGet("ip", "216.58.211.142");
+
+        $res = $this->controller->indexActionGet();
+
+        $this->assertInternalType("array", $res);
     }
 }
