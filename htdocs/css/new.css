@@ -6943,6 +6943,17 @@ a.rm-button.rm-clicked .rm-button-face-2 {
     margin-right: 0.52083333%;
   }
 }
+input.JSONbutton {
+  width: 20%;
+  height: 2rem;
+  text-align: center;
+}
+input.JSONbutton.right {
+  color: #007500;
+}
+input.JSONbutton.wrong {
+  color: #a00000;
+}
 .site-logo {
   display: none;
 }
