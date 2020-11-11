@@ -20,8 +20,7 @@ class IpDefault
         $data = $request->getServer($key);
         if ($data) {
             return $data;
-        }
-        else {
+        } else {
             return "";
         }
     }

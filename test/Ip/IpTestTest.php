@@ -1,12 +1,11 @@
 <?php
 
-namespace Anax\Controller;
+namespace Lioo19\Models;
 
 use Anax\DI\DIFactoryConfig;
 use Anax\DI\DIMagic;
 use PHPUnit\Framework\TestCase;
-use Anax\Controller\IpTest;
-
+use Lioo19\Models\IpTest;
 
 /**
  * Test the SampleController.

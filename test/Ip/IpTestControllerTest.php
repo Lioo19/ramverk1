@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\Controller;
+namespace Lioo19\Controller;
 
 use Anax\DI\DIFactoryConfig;
 use Anax\DI\DIMagic;

@@ -7,7 +7,6 @@ use Anax\Commons\ContainerInjectableTrait;
 use Lioo19\Models\IpTest;
 use Lioo19\Models\IpGeo;
 
-
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
 // use Anax\Route\Exception\InternalErrorException;
@@ -19,28 +18,6 @@ use Lioo19\Models\IpGeo;
 class IpTestJSONController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
-
-    // /**
-    // * @var bool $resultIp4 returns true if Ip4-validation goes through
-    // * @var bool $resultIp6 returns true if Ip6-validation goes through
-    //  */
-    //
-    // public $resultIp4 = null;
-    // public $resultIp6 = null;
-
-
-    /**
-     * The initialize method is optional and will always be called before the
-     * target method/action. This is a convienient method where you could
-     * setup internal properties that are commonly used by several methods.
-     *
-     * @return void
-     */
-    public function initialize() : void
-    {
-        // Use to initialise member variables.
-        $this->db = "active";
-    }
 
     /**
      * This is the index method action, it handles:

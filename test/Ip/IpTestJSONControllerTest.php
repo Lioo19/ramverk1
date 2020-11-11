@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\Controller;
+namespace Lioo19\Controller;
 
 use Anax\DI\DIFactoryConfig;
 use PHPUnit\Framework\TestCase;
@@ -37,7 +37,6 @@ class IpTestJSONControllerTest extends TestCase
         // Setup the controller
         $this->controller = new IpTestJSONController();
         $this->controller->setDI($this->di);
-        $this->controller->initialize();
     }
 
 
@@ -62,7 +61,7 @@ class IpTestJSONControllerTest extends TestCase
     public function testIndexActionGetReq()
     {
         global $di;
-        
+
         $req = $di->get("request");
         $req->setGet("ip", "216.58.211.142");
 

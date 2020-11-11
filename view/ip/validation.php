@@ -33,7 +33,7 @@ if ($data["ip6"]) {
 ?>
 </p>
 <?php
-if ($data["geoInfo"]["country"] == Null) {
+if ($data["geoInfo"] == "Inget att visa") {
     echo "Domänen för adressen är " . $data["hostname"] ;
     echo "<br>Ingen tillgänglig plats";
 } elseif ($data["hostname"] != "Ej korrekt ip") {

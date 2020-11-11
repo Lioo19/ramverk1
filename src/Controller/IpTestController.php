@@ -20,15 +20,6 @@ class IpTestController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-    // /**
-    // * @var bool $resultIp4 returns true if Ip4-validation goes through
-    // * @var bool $resultIp6 returns true if Ip6-validation goes through
-    //  */
-    //
-    // public $resultIp4 = null;
-    // public $resultIp6 = null;
-
-
     public function getDetailsOnRequest(
         string $method,
         array $args = []
