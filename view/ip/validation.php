@@ -33,14 +33,21 @@ if ($data["ip6"]) {
 ?>
 </p>
 <?php
-if ($data["ip"] != $data["hostname"]) {
-        echo "Domänen för adressen är " . $data["hostname"] ;
+if ($data["geoInfo"]["country"] == Null) {
+    echo "Domänen för adressen är " . $data["hostname"] ;
+    echo "<br>Ingen tillgänglig plats";
+} elseif ($data["hostname"] != "Ej korrekt ip") {
+    echo "Domänen för adressen är " . $data["hostname"] ;
+    echo "<br><br>Addressen befinner sig i " . $data["geoInfo"]["city"] . ", " .
+         $data["geoInfo"]["country"];
+    echo "<br>Koordinaterna är <br><b>latitude:</b> " .  $data["geoInfo"]["latitude"] .
+         "<br><b>longitude</b>: " . $data["geoInfo"]["longitude"];
 } else {
     echo "Ingen tillgänglig domän";
+    echo "<br>Ingen tillgänglig plats";
 }
 ?>
 
 
 <!-- <pre>
-<?= var_dump($_POST); ?>
 <?= var_dump($data); ?> -->

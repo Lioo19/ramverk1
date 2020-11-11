@@ -7,7 +7,7 @@ return [
         [
             "info" => "IP-JSON",
             "mount" => "ip-json",
-            "handler" => "\Anax\Controller\IpTestJSONController",
+            "handler" => "\Lioo19\Controller\IpTestJSONController",
         ],
     ]
 ];

@@ -5,7 +5,10 @@
     "minimum-stability": "beta",
     "prefer-stable": true,
     "autoload": {
-        "psr-4": {"Anax\\": "src/"}
+        "psr-4": {
+            "Anax\\": "src/",
+            "Lioo19\\": "src/"
+        }
     },
     "require": {
         "anax/anax-ramverk1-me": "^1.0.0"

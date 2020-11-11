@@ -1,10 +1,12 @@
 <?php
 
-namespace Anax\Controller;
+namespace Lioo19\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Anax\Controller\IpTest;
+use Lioo19\Models\IpTest;
+use Lioo19\Models\IpGeo;
+
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -18,13 +20,13 @@ class IpTestJSONController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-    /**
-    * @var bool $resultIp4 returns true if Ip4-validation goes through
-    * @var bool $resultIp6 returns true if Ip6-validation goes through
-     */
-
-    public $resultIp4 = null;
-    public $resultIp6 = null;
+    // /**
+    // * @var bool $resultIp4 returns true if Ip4-validation goes through
+    // * @var bool $resultIp6 returns true if Ip6-validation goes through
+    //  */
+    //
+    // public $resultIp4 = null;
+    // public $resultIp6 = null;
 
 
     /**
@@ -62,8 +64,11 @@ class IpTestJSONController implements ContainerInjectableInterface
 
         if ($ip6 || $ip4) {
             $hostname = gethostbyaddr($userip);
+            $geo = new IpGeo($userip);
+            $geoInfo = $geo->fetchGeo();
         } else {
             $hostname = "Ej korrekt ip";
+            $geoInfo = "Inget att visa";
         }
 
         $data = [
@@ -71,6 +76,7 @@ class IpTestJSONController implements ContainerInjectableInterface
             "ip4" => $ip4,
             "ip6" => $ip6,
             "host" => $hostname,
+            "geoInfo" => $geoInfo,
         ];
 
         return [$data];

@@ -7,7 +7,7 @@ return [
         [
             "info" => "IP",
             "mount" => "ip",
-            "handler" => "\Anax\Controller\IpTestController",
+            "handler" => "\Lioo19\Controller\IpTestController",
         ],
     ]
 ];

@@ -20,7 +20,7 @@ namespace Anax\View;
         Vad har du för ip-adress?
     </label>
     <br>
-    <input type="text" name="ipinput">
+    <input type="text" name="ipinput" value="<?= $data["defaultIp"]?>">
     </input>
     <br>
     <br>
@@ -70,5 +70,5 @@ namespace Anax\View;
 
 
 
-<!-- <pre>
-<?= var_dump($_POST); ?> -->
+<pre>
+<?= var_dump($data["defaultIp"]); ?>

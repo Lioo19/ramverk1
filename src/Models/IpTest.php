@@ -1,5 +1,5 @@
 <?php
-namespace Anax\Controller;
+namespace Lioo19\Models;
 
 /**
  * Class for checking IP-adress to ip4 and ip6 standard.
