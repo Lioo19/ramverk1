@@ -68,7 +68,6 @@ namespace Anax\View;
     </form>
 </div>
 
-
-
+<!--
 <pre>
-<?= var_dump($data["defaultIp"]); ?>
+<?= var_dump($data["defaultIp"]); ?> -->
