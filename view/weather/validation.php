@@ -48,6 +48,6 @@ if ($data["geoInfo"] == "Inget att visa") {
 }
 ?>
 
-
+<!--
 <pre>
-<?= var_dump($data); ?>
+    <?= var_dump($data); ?> -->

@@ -59,5 +59,10 @@ return [
             "url" => "ip",
             "title" => "Test för Ip-adress",
         ],
+        [
+            "text" => "Väder",
+            "url" => "weather",
+            "title" => "Väder och location",
+        ],
     ],
 ];
