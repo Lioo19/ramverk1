@@ -16,21 +16,6 @@ namespace Anax\View;
 <h1> Resultat </h1>
 
 <p>Resultat för adress <i> <?= $data["ip"] ?></i></p>
-<p>Godkänd Ip4: <?php
-if ($data["ip4"]) {
-    echo "<b>ja</b>";
-} else {
-    echo "<b>nej</b>";
-}
-?>
-</p>
-<p>Godkänd Ip6: <?php
-if ($data["ip6"]) {
-    echo "<b>ja</b>";
-} else {
-    echo "<b>nej</b>";
-}
-?>
 </p>
 <?php
 if ($data["geoInfo"] == "Inget att visa") {
@@ -48,6 +33,7 @@ if ($data["geoInfo"] == "Inget att visa") {
 }
 ?>
 
-<!--
+
 <pre>
-    <?= var_dump($data); ?> -->
+    <?= var_dump($data); ?>
+    <?= var_dump($_POST); ?>

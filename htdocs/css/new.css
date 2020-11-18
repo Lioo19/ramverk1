@@ -6954,6 +6954,10 @@ input.JSONbutton.right {
 input.JSONbutton.wrong {
   color: #a00000;
 }
+#map {
+  width: 100%;
+  height: 350px;
+}
 .site-logo {
   display: none;
 }

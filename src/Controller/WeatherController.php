@@ -8,6 +8,7 @@ use Lioo19\Models\IpTest;
 use Lioo19\Models\IpGeo;
 use Lioo19\Models\IpDefault;
 use Lioo19\Models\GeoMap;
+use Lioo19\Models\Weather;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -79,37 +80,25 @@ class WeatherController implements ContainerInjectableInterface
     {
         $request = $this->di->get("request");
         $page = $this->di->get("page");
-        $title = "Validera IP";
+        $title = "Vädret";
         //request to get the posted information
         $userip = $request->getPost("ipinput", null);
+        $radio = $request->getPost("radiochoice", null);
 
-        $validation = new IpTest($userip);
-        $ip4 = $validation->ip4test();
-        $ip6 = $validation->ip6test();
+        $data = $this->getIpData($userip);
 
-        if ($ip6 || $ip4) {
-            $hostname = gethostbyaddr($userip);
-            $geo = new IpGeo($userip);
-            $geoInfo = $geo->fetchGeo();
-            $map = new GeoMap($geoInfo["longitude"], $geoInfo["latitude"]);
-        } else {
-            $hostname = "Ej korrekt ip";
-            $geoInfo = "Inget att visa";
-        }
-
-        $data = [
-            "ip" => $userip,
-            "ip4" => $ip4,
-            "ip6" => $ip6,
-            "hostname" => $hostname,
-            "geoInfo" => $geoInfo,
-            "map" => $map,
-        ];
-
+        //data for weather
         $data2 = [
-            "lon" => $geoInfo["longitude"],
-            "lat" => $geoInfo["latitude"],
+            "lon" => $data["geoInfo"]["longitude"],
+            "lat" => $data["geoInfo"]["latitude"],
         ];
+
+        //skicka olika typer av väderdata beroende av radio
+        if ($radio == "kommande") {
+            // code...
+        } else {
+
+        }
 
         $page->add("weather/validation", $data);
         $page->add("weather/map", $data2);
@@ -119,6 +108,33 @@ class WeatherController implements ContainerInjectableInterface
         ]);
     }
 
+    private function getIPData($userip) {
+        $validation = new IpTest($userip);
+        $ip4 = $validation->ip4test();
+        $ip6 = $validation->ip6test();
+
+        if ($ip6 || $ip4) {
+            $hostname = gethostbyaddr($userip);
+            $geo = new IpGeo($userip);
+            $geoInfo = $geo->fetchGeo();
+            $map = new GeoMap($geoInfo["longitude"], $geoInfo["latitude"]);
+            $weather = new Weather($geoInfo["longitude"], $geoInfo["latitude"]);
+            $weather = $weather->fetchFutureWeather();
+        } else {
+            $hostname = "Ej korrekt ip";
+            $geoInfo = "Inget att visa";
+        }
+
+        $data = [
+            "ip" => $userip,
+            "hostname" => $hostname,
+            "geoInfo" => $geoInfo,
+            "map" => $map,
+            "weather" => $weather,
+        ];
+
+        return $data;
+    }
 
 
 //can I split all the functions?

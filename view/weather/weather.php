@@ -24,6 +24,12 @@ namespace Anax\View;
     </input>
     <br>
     <br>
+    <input type="radio" id="future" name="radiochoice" value="kommande">
+    <label for="future">Kommande</label><br>
+    <input type="radio" id="previous" name="radiochoice" value="historiskt">
+    <label for="future">Historiskt</label>
+    <br>
+    <br>
     <input type="submit" class="submitbutton" value="Validera"></input>
 </form>
 <br>
@@ -42,30 +48,6 @@ namespace Anax\View;
         "host": "arn09s10-in-f14.1e100.net"
     }
     </pre>
-</div>
-
-<div>
-    <h3>Testroutes</h3>
-    <p>Här nedan kan du testa routes för JSON-valideringen</p>
-    <form action=<?= url("ip-json")?>>
-        <br>
-        <input type="hidden" name="ip" value="216.58.211.142">
-        <input type="submit" class="JSONbutton right" value="Fungerande">
-    </form>
-    <form action=<?= url("ip-json")?>>
-        <br>
-        <input type="hidden" name="ip" value="216.58.21">
-        <input type="submit" class="JSONbutton wrong" value="Felaktig">
-    </form>
-    <br>
-    <form action=<?= url("ip-json")?>>
-        <label>Du kan även testa JSON-validerngen genom att skriva in en egen ip:</label>
-        <br>
-        <input type="text" name="ip">
-        <br>
-        <br>
-        <input type="submit" class="JSONbutton" value="Validera">
-    </form>
 </div>
 
 

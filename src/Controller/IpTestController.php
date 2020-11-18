@@ -52,6 +52,7 @@ class IpTestController implements ContainerInjectableInterface
     {
         $page = $this->di->get("page");
         $request = $this->di->get("request");
+        // $ipDefault = $this->di->get("ipdefault");
         $ipDefault = new IpDefault();
         $usersIp = $ipDefault->getDefaultIp($request);
 
@@ -76,6 +77,7 @@ class IpTestController implements ContainerInjectableInterface
      */
     public function validationActionPost() : object
     {
+
         $request = $this->di->get("request");
         $page = $this->di->get("page");
         $title = "Validera IP";
