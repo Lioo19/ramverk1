@@ -35,14 +35,17 @@ class IpTestJSONController implements ContainerInjectableInterface
         $userip = $request->getGet("ip", "Ingen ip angiven");
 
         if ($userip) {
-            $validation = new IpTest($userip);
+            $validation = new IpTest();
+            $validation->setInput($userip);
+
             $ip4 = $validation->ip4test();
             $ip6 = $validation->ip6test();
         }
 
         if ($ip6 || $ip4) {
             $hostname = gethostbyaddr($userip);
-            $geo = new IpGeo($userip);
+            $geo = new IpGeo();
+            $geo->setInput($userip);
             $geoInfo = $geo->fetchGeo();
         } else {
             $hostname = "Ej korrekt ip";

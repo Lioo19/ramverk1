@@ -4,9 +4,6 @@ namespace Lioo19\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Lioo19\Models\IpTest;
-use Lioo19\Models\IpGeo;
-use Lioo19\Models\IpDefault;
 use Lioo19\Models\GeoMap;
 use Lioo19\Models\Weather;
 
@@ -54,7 +51,7 @@ class WeatherController implements ContainerInjectableInterface
     {
         $page = $this->di->get("page");
         $request = $this->di->get("request");
-        $ipDefault = new IpDefault();
+        $ipDefault = $this->di->get("ipdefault");
         $usersIp = $ipDefault->getDefaultIp($request);
 
         $data = [
@@ -71,7 +68,7 @@ class WeatherController implements ContainerInjectableInterface
     }
 
     /**
-     * POST for ip, redirects to result-page
+     * POST for ip, redirects to result-page for weather
      * Sends the ip-adress with post and redirects
      *
      * @return object
@@ -83,7 +80,6 @@ class WeatherController implements ContainerInjectableInterface
         $title = "Vädret";
         //request to get the posted information
         $userip = $request->getPost("ipinput", null);
-        $radio = $request->getPost("radiochoice", null);
 
         $data = $this->getIpData($userip);
 
@@ -92,13 +88,6 @@ class WeatherController implements ContainerInjectableInterface
             "lon" => $data["geoInfo"]["longitude"],
             "lat" => $data["geoInfo"]["latitude"],
         ];
-
-        //skicka olika typer av väderdata beroende av radio
-        if ($radio == "kommande") {
-            // code...
-        } else {
-
-        }
 
         $page->add("weather/validation", $data);
         $page->add("weather/map", $data2);
@@ -109,17 +98,23 @@ class WeatherController implements ContainerInjectableInterface
     }
 
     private function getIPData($userip) {
-        $validation = new IpTest($userip);
+        $validation = $this->di->get("iptest");
+        $validation->setInput($userip);
+
         $ip4 = $validation->ip4test();
         $ip6 = $validation->ip6test();
 
         if ($ip6 || $ip4) {
             $hostname = gethostbyaddr($userip);
-            $geo = new IpGeo($userip);
+            $geo = $this->di->get("ipgeo");
+            $geo->setInput($userip);
             $geoInfo = $geo->fetchGeo();
-            $map = new GeoMap($geoInfo["longitude"], $geoInfo["latitude"]);
-            $weather = new Weather($geoInfo["longitude"], $geoInfo["latitude"]);
-            $weather = $weather->fetchFutureWeather();
+            $lon = $geoInfo["longitude"];
+            $lat = $geoInfo["latitude"];
+            $map = new GeoMap($lon, $lat);
+            $weather = new Weather();
+            $currweather = $weather->fetchCurrentWeather($lon, $lat);
+            $histweather = $weather->fetchHistoricalWeather($lon, $lat);
         } else {
             $hostname = "Ej korrekt ip";
             $geoInfo = "Inget att visa";
@@ -130,32 +125,10 @@ class WeatherController implements ContainerInjectableInterface
             "hostname" => $hostname,
             "geoInfo" => $geoInfo,
             "map" => $map,
-            "weather" => $weather,
+            "currweather" => $currweather,
+            "histweather" => $histweather,
         ];
 
         return $data;
     }
-
-
-//can I split all the functions?
-//     /**
-//      * POST for ip, redirects to result-page
-//      * Sends the ip-adress with post and redirects
-//      *
-//      * @return object
-//      */
-//     private function validateIP($userip) : object
-//     {
-//         $validation = new IpTest($userip);
-//         $ip4 = $validation->ip4test();
-//         $ip6 = $validation->ip6test();
-//
-//         $data = [
-//             "ip" => $userip,
-//             "ip4" => $ip4,
-//             "ip6" => $ip6,
-//         ];
-//
-//         return $data;
-//     }
 }

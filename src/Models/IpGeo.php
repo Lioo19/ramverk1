@@ -19,11 +19,9 @@ class IpGeo
      *
      * @param null|string    $ipinp  User input
      */
-    public function __construct(string $ipinp = "")
+    public function setInput(string $ipinp = "")
     {
         $this->ipinput = $ipinp;
-        // $this->curl = curl_init("http://api.ipstack.com/158.174.99.2?access_key=91d0f1c6f2631e454e679860d9a4cedd&format=1");
-        $this->curl = curl_init();
     }
 
     /**
@@ -32,6 +30,7 @@ class IpGeo
     */
     public function fetchGeo($url = "http://api.ipstack.com/")
     {
+        $this->curl = curl_init();
         $apikey = require ANAX_INSTALL_PATH . "/config/apikeys.php";
         $accesskey = $apikey["ipstack"];
         //sets the url for curl to the correct one

@@ -4,12 +4,10 @@
 */
 return [
     "services" => [
-        "validator" => [
-            "shared" => true,
+        "ipdefault" => [
             "callback" => function() {
-                $object = new \Anax\Models\IPDefault();
-                $object->setDi($this);
-                return $object;
+                $ipdefault = new \Lioo19\Models\IpDefault();
+                return $ipdefault;
             }
         ]
     ]

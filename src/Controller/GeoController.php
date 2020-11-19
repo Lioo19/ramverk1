@@ -4,9 +4,6 @@ namespace Lioo19\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Lioo19\Models\IpTest;
-use Lioo19\Models\IpGeo;
-use Lioo19\Models\IpDefault;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -52,7 +49,7 @@ class GeoController implements ContainerInjectableInterface
     {
         $page = $this->di->get("page");
         $request = $this->di->get("request");
-        $ipDefault = new IpDefault();
+        $ipDefault = $this->di->get("ipdefault");
         $usersIp = $ipDefault->getDefaultIp($request);
 
         $data = [
@@ -82,13 +79,16 @@ class GeoController implements ContainerInjectableInterface
         //request to get the posted information
         $userip = $request->getPost("ipinput", null);
 
-        $validation = new IpTest($userip);
+        $validation = $this->di->get("iptest");
+        $validation->setInput($userip);
+
         $ip4 = $validation->ip4test();
         $ip6 = $validation->ip6test();
 
         if ($ip6 || $ip4) {
             $hostname = gethostbyaddr($userip);
-            $geo = new IpGeo($userip);
+            $geo = $this->di->get("ipgeo")
+            $geo->setInput($userip);
             $geoInfo = $geo->fetchGeo();
         } else {
             $hostname = "Ej korrekt ip";

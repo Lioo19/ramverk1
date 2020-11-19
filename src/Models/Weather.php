@@ -7,118 +7,11 @@ namespace Lioo19\Models;
  */
 class Weather
 {
-
-    /**
-     * Constructor to assign user input and address to use
-     *
-     * @param null|string    $ipinp  User input
-     */
-    public function __construct(string $lon = "", $lat = "")
-    {
-        $this->lat = strval($lat);
-        $this->lon = strval($lon);
-        $this->curl = curl_init();
-    }
-
-    /**
-    * Method for retriving the weather info, given coordinates
-    * @return object With parts of valid JSON-repsonse
-    * DONT UPLOAD THIS UNTIL KEY IS FIXED!!
-    */
-    public function fetchFutureWeather($url = "api.openweathermap.org/data/2.5/weather?lat=")
+    private function getApikey()
     {
         $apikey = require ANAX_INSTALL_PATH . "/config/apikeys.php";
         $apikey = $apikey["openweathermap"];
-        //sets the url for curl to the correct one
-        curl_setopt($this->curl, CURLOPT_URL, "$url" . $this->lat . "&lon=" . $this->lon . "&units=metric&APPID=" . $apikey);
-        //returns a string
-        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
-        //execute the started curl-session
-        $output = curl_exec($this->curl);
-        $exploded = json_decode($output, true);
-        // $data = $exploded;
-        $data = [
-            "main" => $exploded["weather"][0]["main"],
-            "description" => $exploded["weather"][0]["description"],
-            "temp" => $exploded["main"]["temp"],
-            "feels_like" => $exploded["main"]["feels_like"],
-            "wind" => $exploded["wind"]["speed"],
-            "lat" => $this->lat,
-            "lon" => $this->lon,
-
-        ];
-        //close curl-session to free up space
-        curl_close($this->curl);
-
-        return $data;
-    }
-
-    /**
-    * Method for retriving the weather info, given coordinates
-    * @return object With parts of valid JSON-repsonse
-    * Need to make five different API-calls, one for each day
-    * how do I get the unix-time?
-    */
-    public function fetchHistoricalWeather($url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=")
-    {
-        $apikey = require ANAX_INSTALL_PATH . "/config/apikeys.php";
-        $apikey = $apikey["openweathermap"];
-        //sets the url for curl to the correct one
-        curl_setopt($this->curl, CURLOPT_URL, "$url" . $this->lat . "&lon=" . $this->lon . "&units=metric&lang=se&APPID=" . $apikey);
-        //returns a string
-        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
-        //execute the started curl-session
-        $output = curl_exec($this->curl);
-        $exploded = json_decode($output, true);
-        // $data = $exploded;
-        $data = [
-            "main" => $exploded["weather"][0]["main"],
-            "description" => $exploded["weather"][0]["description"],
-            "temp" => $exploded["main"]["temp"],
-            "feels_like" => $exploded["main"]["feels_like"],
-            "wind" => $exploded["wind"]["speed"],
-            "lat" => $this->lat,
-            "lon" => $this->lon,
-
-        ];
-        //close curl-session to free up space
-        curl_close($this->curl);
-
-        return $data;
-    }
-
-    /**
-    * Method for retriving the weather info, given coordinates
-    * @return object With parts of valid JSON-repsonse
-    * how do I get the unix-time?
-    */
-    public function fetchOneHWeather($url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=")
-    {
-        $apikey = require ANAX_INSTALL_PATH . "/config/apikey.php";
-        $apikey = $apikey["openweathermap"];
-
-        //sets the url for curl to the correct one
-        curl_setopt($this->curl, CURLOPT_URL, "$url" . $this->lat . "&lon=" . $this->lon . "&units=metric&lang=se&APPID=" . $apikey);
-        //returns a string
-        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
-        //execute the started curl-session
-        $output = curl_exec($this->curl);
-        $exploded = json_decode($output, true);
-        // $data = $exploded;
-        $data = [
-            "main" => $exploded["weather"][0]["main"],
-            "description" => $exploded["weather"][0]["description"],
-            "temp" => $exploded["main"]["temp"],
-            "feels_like" => $exploded["main"]["feels_like"],
-            "wind" => $exploded["wind"]["speed"],
-            "lat" => $this->lat,
-            "lon" => $this->lon,
-
-        ];
-        //close curl-session to free up space
-        curl_close($this->curl);
-
-        return $data;
+        return $apikey;
     }
 
     /**
@@ -135,4 +28,86 @@ class Weather
         return $days;
     }
 
+    /**
+    * Method for retriving the weather info, given coordinates
+    * @return object With parts of valid JSON-repsonse
+    *
+    */
+    public function fetchCurrentWeather(string $lon, string $lat, $url = "api.openweathermap.org/data/2.5/weather?lat=")
+    {
+        $curl = curl_init();
+        $apikey = $this->getApikey();
+
+        //sets the url for curl to the correct one
+        curl_setopt($curl, CURLOPT_URL, "$url" . $lat . "&lon=" . $lon . "&lang=se&units=metric&APPID=" . $apikey);
+        //returns a string
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        //execute the started curl-session
+        $output = curl_exec($curl);
+        $exploded = json_decode($output, true);
+        // $data = $exploded;
+        $data = [
+            "main" => $exploded["weather"][0]["main"],
+            "description" => $exploded["weather"][0]["description"],
+            "temp" => $exploded["main"]["temp"],
+            "feels_like" => $exploded["main"]["feels_like"],
+            "wind" => $exploded["wind"]["speed"],
+        ];
+        //close curl-session to free up space
+        curl_close($curl);
+
+        return $data;
+    }
+
+    /**
+    * Method for retriving the weather info, given coordinates
+    * @return object With parts of valid JSON-repsonse
+    * Need to make five different API-calls, one for each day
+    * how do I get the unix-time?
+    */
+    public function fetchHistoricalWeather(string $lon, string $lat)
+    {
+        $apikey = $this->getApikey();
+        $url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="
+                . $lat . "&lon=" . $lon . "&lang=se&units=metric&dt=";
+        $urlcont = "&APPID=" . $apikey;
+        $days = $this->getDate();
+
+        //sets the url for curl to the correct one
+        $multi = curl_multi_init();
+        $all = [];
+        foreach ($days as $day) {
+            $c = curl_init($url . $day . $urlcont);
+            curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+            curl_multi_add_handle($multi, $c);
+            $all[] = $c;
+        }
+
+        $run = null;
+
+        do {
+            curl_multi_exec($multi, $run);
+        } while ($run);
+
+        //remove handles
+        foreach ($all as $c) {
+            curl_multi_remove_handle($multi, $c);
+        }
+        //close curl sessions
+        curl_multi_close($multi);
+
+        $res = [];
+        // $res = $days;
+
+
+        foreach ($all as $c) {
+            $output = curl_multi_getcontent($c);
+            $exploded = json_decode($output, true);
+            $exploded = $exploded["current"];
+
+            $res[] = $exploded;
+        }
+
+        return $res;
+    }
 }

@@ -14,13 +14,12 @@ class IpTest
     private $ipinput;
 
     /**
-     * Constructor to assign user input
+     * Function to set user ip
      *
      * @param null|string    $ipinp  User input
      */
-    public function __construct(string $ipinp = "")
+    public function setInput(string $ipinp = "")
     {
-
         $this->ipinput = $ipinp;
     }
 

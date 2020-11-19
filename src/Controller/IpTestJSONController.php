@@ -4,8 +4,6 @@ namespace Lioo19\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Lioo19\Models\IpTest;
-use Lioo19\Models\IpGeo;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -34,14 +32,16 @@ class IpTestJSONController implements ContainerInjectableInterface
         $userip = $request->getGet("ip", "Ingen ip angiven");
 
         if ($userip) {
-            $validation = new IpTest($userip);
+            $validation = $this->di->get("iptest");
+            $validation->setInput($userip);
             $ip4 = $validation->ip4test();
             $ip6 = $validation->ip6test();
         }
 
         if ($ip6 || $ip4) {
             $hostname = gethostbyaddr($userip);
-            $geo = new IpGeo($userip);
+            $geo = $this->di->get("ipgeo");
+            $geo->setInput($userip);
             $geoInfo = $geo->fetchGeo();
         } else {
             $hostname = "Ej korrekt ip";

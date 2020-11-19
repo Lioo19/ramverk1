@@ -24,12 +24,6 @@ namespace Anax\View;
     </input>
     <br>
     <br>
-    <input type="radio" id="future" name="radiochoice" value="kommande">
-    <label for="future">Kommande</label><br>
-    <input type="radio" id="previous" name="radiochoice" value="historiskt">
-    <label for="future">Historiskt</label>
-    <br>
-    <br>
     <input type="submit" class="submitbutton" value="Validera"></input>
 </form>
 <br>

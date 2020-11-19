@@ -6,10 +6,10 @@
 return [
     //services to add to container
     "services" => [
-        "iptest" => [
+        "ipgeo" => [
             "callback" => function () {
-                $iptest = new \Lioo19\Models\IpTest();
-                return $iptest;
+                $ipgeo = new \Lioo19\Models\IpGeo();
+                return $ipgeo;
             }
         ]
     ]

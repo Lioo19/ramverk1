@@ -11,7 +11,6 @@ class IpDefault
     /**
      * defaultIp from users adress
      *
-     *
      * @return string $ipdefault
      */
     public function getDefaultIp($request) : string
