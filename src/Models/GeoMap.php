@@ -13,7 +13,7 @@ class GeoMap
     * @var float $lon Longitude
     * @var float $lat Latitude
     *
-    * @return string|void
+    * @return object|void
     *
     */
     public function fetchMap($lon, $lat) {

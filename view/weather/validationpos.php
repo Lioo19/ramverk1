@@ -16,18 +16,6 @@ namespace Anax\View;
 <h1>Vädret</h1>
 </p>
 <?php
-if ($data["geoInfo"] == "Inget att visa") {
-    echo "Domänen för adressen är " . $data["hostname"] ;
-    echo "<br>Ingen tillgänglig plats";
-} elseif ($data["hostname"] != "Ej korrekt ip") {
-    echo "<br><br>Addressen befinner sig i " . $data["geoInfo"]["city"] . ", " .
-         $data["geoInfo"]["country"];
-    echo "<br>Koordinaterna är <br><b>latitude:</b> " .  $data["geoInfo"]["latitude"] .
-         "<br><b>longitude</b>: " . $data["geoInfo"]["longitude"];
-} else {
-    echo "Ingen tillgänglig domän";
-    echo "<br>Ingen tillgänglig plats";
-}
 ?>
 <div id="currweather">
     <?php
@@ -58,7 +46,7 @@ if ($data["geoInfo"] == "Inget att visa") {
     }?>
 </div>
 
-<!--
+
 <pre>
     <?= var_dump($data); ?>
-    <?= var_dump($_POST); ?> -->
+    <?= var_dump($_POST); ?>

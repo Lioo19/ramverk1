@@ -37,26 +37,37 @@ class Weather
     {
         $curl = curl_init();
         $apikey = $this->getApikey();
+        if (strlen($lon) > 0 && strlen($lat) > 0) {
 
-        //sets the url for curl to the correct one
-        curl_setopt($curl, CURLOPT_URL, "$url" . $lat . "&lon=" . $lon . "&lang=se&units=metric&APPID=" . $apikey);
-        //returns a string
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        //execute the started curl-session
-        $output = curl_exec($curl);
-        $exploded = json_decode($output, true);
-        // $data = $exploded;
-        $data = [
-            "main" => $exploded["weather"][0]["main"],
-            "description" => $exploded["weather"][0]["description"],
-            "temp" => $exploded["main"]["temp"],
-            "feels_like" => $exploded["main"]["feels_like"],
-            "wind" => $exploded["wind"]["speed"],
-        ];
-        //close curl-session to free up space
-        curl_close($curl);
+            //sets the url for curl to the correct one
+            curl_setopt($curl, CURLOPT_URL, "$url" . $lat . "&lon=" . $lon . "&lang=se&units=metric&APPID=" . $apikey);
+            //returns a string
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            //execute the started curl-session
+            $output = curl_exec($curl);
+            $exploded = json_decode($output, true);
 
-        return $data;
+            // $data = $exploded;
+            if (array_key_exists("message", $exploded))  {
+                $data = [
+                    "message" => $exploded["message"]
+                ];
+                return $data;
+            }
+            $data = [
+                "main" => $exploded["weather"][0]["main"],
+                "description" => $exploded["weather"][0]["description"],
+                "temp" => $exploded["main"]["temp"],
+                "feels_like" => $exploded["main"]["feels_like"],
+                "wind" => $exploded["wind"]["speed"],
+            ];
+            //close curl-session to free up space
+            curl_close($curl);
+
+            return $data;
+        } else {
+            return "Not a valid lon/lat";
+        }
     }
 
     /**
@@ -103,7 +114,14 @@ class Weather
         foreach ($all as $c) {
             $output = curl_multi_getcontent($c);
             $exploded = json_decode($output, true);
-            $exploded = $exploded["current"];
+            if (array_key_exists("message", $exploded)) {
+                $data = [
+                    "message" => $exploded["message"]
+                ];
+                return $data;
+            } else {
+                $exploded = $exploded["current"];
+            }
 
             $res[] = $exploded;
         }

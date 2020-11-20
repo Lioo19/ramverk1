@@ -19,26 +19,6 @@ class WeatherController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-    public function getDetailsOnRequest(
-        string $method,
-        array $args = []
-    ) : string {
-                $request        = $this->di->get("request");
-                $path           = $request->getRoute();
-                $httpMethod     = $request->getMethod();
-                $numArgs        = count($args);
-                $strArgs        = implode(", ", $args);
-                $queryString    = http_build_query($request->getGet(), '', ', ');
-
-                return <<<EOD
-                    <h1>$method</h1>
-
-                    <p>The request was '$path' ($httpMethod).</p>
-                    <p>Got '$numArgs' arguments: '$strArgs'.</p>
-                    <p>Query string contains: '$queryString'.</p>
-                EOD;
-    }
-
     /**
      * This is the index method action, it handles:
      * ANY METHOD mountpoint
@@ -55,7 +35,6 @@ class WeatherController implements ContainerInjectableInterface
         $usersIp = $ipDefault->getDefaultIp($request);
 
         $data = [
-            "content" => $this->getDetailsOnRequest(__METHOD__),
             "defaultIp" => $usersIp,
         ];
 
@@ -80,21 +59,49 @@ class WeatherController implements ContainerInjectableInterface
         $title = "Vädret";
         //request to get the posted information
         $userip = $request->getPost("ipinput", null);
+        $userlon = $request->getPost("lon", null);
+        $userlat = $request->getPost("lat", null);
 
-        $data = $this->getIpData($userip);
 
-        //data for weather
-        $data2 = [
-            "lon" => $data["geoInfo"]["longitude"],
-            "lat" => $data["geoInfo"]["latitude"],
-        ];
+        if ($userip) {
+            $data = $this->getIpData($userip);
 
-        $page->add("weather/validation", $data);
-        $page->add("weather/map", $data2);
+            if (count($data) < 2 ) {
+                $page->add("weather/validationfail", $data);
+            } else {
+                //data for map
+                $data2 = [
+                    "lon" => $data["geoInfo"]["longitude"],
+                    "lat" => $data["geoInfo"]["latitude"],
+                ];
 
+                $page->add("weather/validationip", $data);
+                $page->add("weather/map", $data2);
+            }
+        } elseif ($userlon && $userlat) {
+            $data = $this->getPosData($userlon, $userlat);
+
+            if (count($data) < 2 ) {
+                $page->add("weather/validationfail", $data);
+            } else {
+                $data2 = [
+                    "lon" => $userlon,
+                    "lat" => $userlat,
+                ];
+
+                $page->add("weather/validationpos", $data);
+                $page->add("weather/map", $data2);
+            }
+        } else {
+            $datafail = [
+                "message" => "Gå tillbaka och försök igen"
+                ];
+            $page->add("weather/validationfail", $datafail);
+        }
         return $page->render([
             "title" => $title,
         ]);
+
     }
 
     private function getIPData($userip) {
@@ -116,8 +123,11 @@ class WeatherController implements ContainerInjectableInterface
             $currweather = $weather->fetchCurrentWeather($lon, $lat);
             $histweather = $weather->fetchHistoricalWeather($lon, $lat);
         } else {
-            $hostname = "Ej korrekt ip";
-            $geoInfo = "Inget att visa";
+            $data = [
+                "message" => "Inkorrekt IP, försök igen",
+            ];
+
+            return $data;
         }
 
         $data = [
@@ -127,6 +137,32 @@ class WeatherController implements ContainerInjectableInterface
             "map" => $map,
             "currweather" => $currweather,
             "histweather" => $histweather,
+        ];
+
+        return $data;
+    }
+
+    private function getPosData($userlon, $userlat) {
+        //check that lon/lat are valid floats
+        if (floatval($userlon) != 0 && floatval($userlat) != 0) {
+            $map = new GeoMap($userlon, $userlat);
+            $weather = new Weather();
+            $currweather = $weather->fetchCurrentWeather($userlon, $userlat);
+            $histweather = $weather->fetchHistoricalWeather($userlon, $userlat);
+            if ($currweather["main"]) {
+                $data = [
+                    "map" => $map,
+                    "currweather" => $currweather,
+                    "histweather" => $histweather,
+                    "lon" => $userlon,
+                    "lat" => $userlat
+                ];
+
+                return $data;
+            }
+        }
+        $data = [
+            "message" => "Inkorrekt position, försök igen",
         ];
 
         return $data;

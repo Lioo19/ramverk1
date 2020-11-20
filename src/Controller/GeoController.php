@@ -17,26 +17,6 @@ class GeoController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-    public function getDetailsOnRequest(
-        string $method,
-        array $args = []
-    ) : string {
-                $request        = $this->di->get("request");
-                $path           = $request->getRoute();
-                $httpMethod     = $request->getMethod();
-                $numArgs        = count($args);
-                $strArgs        = implode(", ", $args);
-                $queryString    = http_build_query($request->getGet(), '', ', ');
-
-                return <<<EOD
-                    <h1>$method</h1>
-
-                    <p>The request was '$path' ($httpMethod).</p>
-                    <p>Got '$numArgs' arguments: '$strArgs'.</p>
-                    <p>Query string contains: '$queryString'.</p>
-                EOD;
-    }
-
     /**
      * This is the index method action, it handles:
      * ANY METHOD mountpoint
@@ -53,7 +33,6 @@ class GeoController implements ContainerInjectableInterface
         $usersIp = $ipDefault->getDefaultIp($request);
 
         $data = [
-            "content" => $this->getDetailsOnRequest(__METHOD__),
             "defaultIp" => $usersIp,
         ];
 
@@ -87,7 +66,7 @@ class GeoController implements ContainerInjectableInterface
 
         if ($ip6 || $ip4) {
             $hostname = gethostbyaddr($userip);
-            $geo = $this->di->get("ipgeo")
+            $geo = $this->di->get("ipgeo");
             $geo->setInput($userip);
             $geoInfo = $geo->fetchGeo();
         } else {

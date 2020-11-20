@@ -48,9 +48,9 @@ class IpDefaultTest extends TestCase
         global $di;
 
         $req = $di->get("request");
-        $ip = "194.47.129.126";
-        $req->setServer("REMOTE_ADDR", $ip);
+        $testip = "194.47.129.126";
+        $req->setServer("REMOTE_ADDR", $testip);
         $usersIp = $this->class->getDefaultIp($req);
-        $this->assertEquals($usersIp, $ip);
+        $this->assertEquals($usersIp, $testip);
     }
 }

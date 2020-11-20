@@ -2,7 +2,7 @@
 namespace Lioo19\Models;
 
 /**
- * Class for findnin coordinates and place with ip
+ * Class for findning coordinates and place with ip
  *
  */
 class IpGeo

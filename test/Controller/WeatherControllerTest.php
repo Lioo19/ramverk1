@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test the SampleController.
  */
-class IpTestControllerTest extends TestCase
+class WeatherControllerTest extends TestCase
 {
 
     /**
@@ -25,7 +25,7 @@ class IpTestControllerTest extends TestCase
         $di->loadServices(ANAX_INSTALL_PATH . "/config/di");
 
         // Create and initiate the controller
-        $this->controller = new IpTestController();
+        $this->controller = new WeatherController();
 
         $this->controller->setDi($di);
     }
@@ -43,7 +43,7 @@ class IpTestControllerTest extends TestCase
      * Test the route "vaildationActionPost".
      * success
      */
-    public function testValidationActionPost()
+    public function testValidationActionIpPost()
     {
         global $di;
 
@@ -57,5 +57,47 @@ class IpTestControllerTest extends TestCase
 
         $res = $this->controller->validationActionPost();
         $this->assertIsObject($res);
+    }
+
+    /**
+     * Test the route "vaildationActionPost".
+     * success
+     */
+    public function testValidationActionPosPost()
+    {
+        global $di;
+
+        $req = $di->get("request");
+        $req->setPost("lon", "17.79");
+        $req->setPost("lat", "5.69");
+
+        $res = $this->controller->validationActionPost();
+        $this->assertIsObject($res);
+
+        $req->setPost("lon", "vbn");
+
+        $res2 = $this->controller->validationActionPost();
+        $this->assertIsObject($res2);
+    }
+
+    /**
+     * Test the route "vaildationActionPost".
+     * success
+     */
+    public function testValidationActionPosPostFail()
+    {
+        global $di;
+
+        $req = $di->get("request");
+        $req->setPost("lon", "17.79");
+        $req->setPost("lat", "");
+
+        $res = $this->controller->validationActionPost();
+        $this->assertIsObject($res);
+
+        // $req->setPost("lon", "vbn");
+        //
+        // $res2 = $this->controller->validationActionPost();
+        // $this->assertIsObject($res2);
     }
 }

@@ -10,30 +10,48 @@ namespace Anax\View;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>100</title>
+    <title>Vädret</title>
 </head>
 
 <h1> Vädret </h1>
+<p>Här kan du få ut ditt nuvarande väder, samt vädret för de fem föregående dagarna.
+<br>Du väljer själv om du vill ange din ip-adress eller lon/lat.</p>
 
 <form method="POST" action="weather/validation">
     <label>
-        Ange din ip-adress eller närmaste ort för att se vädret där du befinner dig!
+        Ip-adress:
     </label>
-    <br>
-    <input type="text" name="ipinput" value="<?= $data["defaultIp"]?>">
+    <input type="text"  class="ipinput" name="ipinput">
     </input>
     <br>
     <br>
-    <input type="submit" class="submitbutton" value="Validera"></input>
+    <legend><b>Eller</b></legend>
+    <br>
+    <label>
+        Longitude:
+    </label>
+    <input type="text" name="lon">
+    </input>
+    <label>
+        Latitude:
+    </label>
+    <input type="text" name="lat">
+    </input>
+    <br>
+    <br>
+    <input type="submit" class="submitbutton" value="Vädra!"></input>
 </form>
 <br>
 
 <div>
     <h3>JSON-validering</h3>
-    <p>Om du hellre vill validera din IP via din url går det också bra.
+    <p>Om du hellre vill se vädret som JSON går det också bra.
+        <br>
+        Antingen gör du det med din ip, eller lon/lat.
         <br>
         Detta gör du genom att skicka en GET-request, likt följande exempel: </p>
-    <p><i> GET /ip-json?ip=216.58.211.142</i></p>
+        <p><i> GET /weather-json?ip=216.58.211.142</i></p>
+        <p><i> GET /weather-json?lon=17.79&lat=5.69</i></p>
     <pre>
     {
         "ip": "216.58.211.142",
@@ -45,5 +63,5 @@ namespace Anax\View;
 </div>
 
 
-<pre>
-<?= var_dump($data["defaultIp"]); ?>
+<!-- <pre>
+<?= var_dump($data["defaultIp"]); ?> -->
