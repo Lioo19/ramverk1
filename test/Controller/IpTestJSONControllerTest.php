@@ -35,7 +35,7 @@ class IpTestJSONControllerTest extends TestCase
         $di = $this->di;
 
         // Setup the controller
-        $this->controller = new IpTestJSONController();
+        $this->controller = new IpTestJSONControllerMock();
         $this->controller->setDI($this->di);
     }
 

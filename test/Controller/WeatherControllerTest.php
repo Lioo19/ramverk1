@@ -25,7 +25,7 @@ class WeatherControllerTest extends TestCase
         $di->loadServices(ANAX_INSTALL_PATH . "/config/di");
 
         // Create and initiate the controller
-        $this->controller = new WeatherController();
+        $this->controller = new WeatherControllerMock();
 
         $this->controller->setDi($di);
     }
@@ -51,8 +51,8 @@ class WeatherControllerTest extends TestCase
         $req->setPost("ipinput", "216.58.211.142");
 
         $res = $this->controller->validationActionPost();
+        $this->assertIsObject($res);
 
-        $req = $di->get("request");
         $req->setPost("ipinput", "216.58.");
 
         $res = $this->controller->validationActionPost();
@@ -94,10 +94,5 @@ class WeatherControllerTest extends TestCase
 
         $res = $this->controller->validationActionPost();
         $this->assertIsObject($res);
-
-        // $req->setPost("lon", "vbn");
-        //
-        // $res2 = $this->controller->validationActionPost();
-        // $this->assertIsObject($res2);
     }
 }

@@ -18,7 +18,7 @@ namespace Anax\View;
     <p>
         <?php
         echo $data["message"];
-         ?>
+        ?>
     </p>
 </div>
 

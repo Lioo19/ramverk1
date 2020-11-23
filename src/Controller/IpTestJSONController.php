@@ -40,9 +40,7 @@ class IpTestJSONController implements ContainerInjectableInterface
 
         if ($ip6 || $ip4) {
             $hostname = gethostbyaddr($userip);
-            $geo = $this->di->get("ipgeo");
-            $geo->setInput($userip);
-            $geoInfo = $geo->fetchGeo();
+            $geoInfo = $this->getGeo($userip);
         } else {
             $hostname = "Ej korrekt ip";
             $geoInfo = "Inget att visa";
@@ -57,5 +55,14 @@ class IpTestJSONController implements ContainerInjectableInterface
         ];
 
         return [$data];
+    }
+
+    public function getGeo($userip)
+    {
+        $geo = $this->di->get("ipgeo");
+        $geo->setInput($userip);
+        $geoInfo = $geo->fetchGeo();
+
+        return $geoInfo;
     }
 }

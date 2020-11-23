@@ -19,7 +19,8 @@ class Weather
     * @return object with the different dates given in unix
     *
     */
-    private function getDate() {
+    private function getDate()
+    {
         $days = [];
         for ($i = 0; $i > -5; $i--) {
             $days[] = strtotime("$i days");
@@ -38,7 +39,6 @@ class Weather
         $curl = curl_init();
         $apikey = $this->getApikey();
         if (strlen($lon) > 0 && strlen($lat) > 0) {
-
             //sets the url for curl to the correct one
             curl_setopt($curl, CURLOPT_URL, "$url" . $lat . "&lon=" . $lon .
                         "&exclude=minutely,hourly&lang=se&units=metric&APPID=" . $apikey);
@@ -49,21 +49,13 @@ class Weather
             $exploded = json_decode($output, true);
 
             // $data = $exploded;
-            if (array_key_exists("message", $exploded))  {
+            if (array_key_exists("message", $exploded)) {
                 $data = [
                     "message" => $exploded["message"]
                 ];
                 return $data;
             }
             $data = $exploded;
-
-            // $data = [
-            //     "main" => $exploded["weather"][0]["main"],
-            //     "description" => $exploded["weather"][0]["description"],
-            //     "temp" => $exploded["main"]["temp"],
-            //     "feels_like" => $exploded["main"]["feels_like"],
-            //     "wind" => $exploded["wind"]["speed"],
-            // ];
             //close curl-session to free up space
             curl_close($curl);
 
@@ -77,7 +69,7 @@ class Weather
     * Method for retriving the weather info, given coordinates
     * @return object With parts of valid JSON-repsonse
     * Need to make five different API-calls, one for each day
-    * how do I get the unix-time?
+    *
     */
     public function fetchHistoricalWeather($lon, $lat)
     {

@@ -42,13 +42,36 @@ class WeatherJSONController implements ContainerInjectableInterface
             $data = $this->getPosData($userlon, $userlat);
         } else {
             $data = [
-                "message" => "Inget korrekt värde angivet"
+                "message" => "Inkorrekt värde angivet"
             ];
         }
         return [$data];
     }
 
-    private function getIPData($userip) {
+    public function getGeo($userip)
+    {
+        $geo = $this->di->get("ipgeo");
+        $geo->setInput($userip);
+        $geoInfo = $geo->fetchGeo();
+
+        return $geoInfo;
+    }
+
+    public function getWeather($which, $userlon, $userlat)
+    {
+        if ($which == "forecast") {
+            $weather = new Weather();
+            $forweather = $weather->fetchForecastWeather($userlon, $userlat);
+            return $forweather;
+        } else {
+            $weather = new Weather();
+            $histweather = $weather->fetchHistoricalWeather($userlon, $userlat);
+            return $histweather;
+        }
+    }
+
+    private function getIPData($userip)
+    {
         $validation = $this->di->get("iptest");
         $validation->setInput($userip);
 
@@ -57,14 +80,11 @@ class WeatherJSONController implements ContainerInjectableInterface
 
         if ($ip6 || $ip4) {
             $hostname = gethostbyaddr($userip);
-            $geo = $this->di->get("ipgeo");
-            $geo->setInput($userip);
-            $geoInfo = $geo->fetchGeo();
+            $geoInfo = $this->getGeo($userip);
             $lon = $geoInfo["longitude"];
             $lat = $geoInfo["latitude"];
-            $weather = new Weather();
-            $forweather = $weather->fetchForecastWeather($lon, $lat);
-            $histweather = $weather->fetchHistoricalWeather($lon, $lat);
+            $forweather = $this->getWeather("forecast", $lon, $lat);
+            $histweather = $this->getWeather("historical", $lon, $lat);
         } else {
             $data = [
                 "message" => "Inkorrekt IP, prova igen",
@@ -78,10 +98,37 @@ class WeatherJSONController implements ContainerInjectableInterface
             "hostname" => $hostname,
             "geoInfo" => $geoInfo,
             "weathertoday" => [
-                "description" => $forweather["description"],
-                "temp" => number_format($forweather["temp"], 2),
-                "feels_like" => number_format($forweather["feels_like"], 2)
+                "description" => $forweather["current"]["weather"][0]["description"],
+                "temp" => number_format($forweather["current"]["temp"], 2),
+                "feels_like" => number_format($forweather["current"]["feels_like"], 2)
                 ],
+            "forecast" => [
+                "tomorrow" => [
+                    "description" => $forweather["daily"][0]["weather"][0]["description"],
+                    "temp" => number_format($forweather["daily"][0]["temp"]["day"], 2),
+                    "feels_like" => number_format($forweather["daily"][0]["feels_like"]["day"], 2)
+                ],
+                "in_2_days" => [
+                    "description" => $forweather["daily"][1]["weather"][0]["description"],
+                    "temp" => number_format($forweather["daily"][1]["temp"]["day"], 2),
+                    "feels_like" => number_format($forweather["daily"][1]["feels_like"]["day"], 2)
+                ],
+                "in_3_days" => [
+                    "description" => $forweather["daily"][2]["weather"][0]["description"],
+                    "temp" => number_format($forweather["daily"][2]["temp"]["day"], 2),
+                    "feels_like" => number_format($forweather["daily"][2]["feels_like"]["day"], 2)
+                ],
+                "in_4_days" => [
+                    "description" => $forweather["daily"][3]["weather"][0]["description"],
+                    "temp" => number_format($forweather["daily"][3]["temp"]["day"], 2),
+                    "feels_like" => number_format($forweather["daily"][3]["feels_like"]["day"], 2)
+                ],
+                "in_5_days" => [
+                    "description" => $forweather["daily"][4]["weather"][0]["description"],
+                    "temp" => number_format($forweather["daily"][4]["temp"]["day"], 2),
+                    "feels_like" => number_format($forweather["daily"][4]["feels_like"]["day"], 2)
+                ],
+            ],
             "histweather" => [
                 "yesterday" => [
                     "description" => $histweather[0]["weather"][0]["description"],
@@ -114,12 +161,12 @@ class WeatherJSONController implements ContainerInjectableInterface
         return $data;
     }
 
-    private function getPosData($userlon, $userlat) {
+    private function getPosData($userlon, $userlat)
+    {
         //check that lon/lat are valid floats
         if (floatval($userlon) != 0 && floatval($userlat) != 0) {
-            $weather = new Weather();
-            $forweather = $weather->fetchForecastWeather($userlon, $userlat);
-            $histweather = $weather->fetchHistoricalWeather($userlon, $userlat);
+            $forweather = $this->getWeather("forecast", $userlon, $userlat);
+            $histweather = $this->getWeather("historical", $userlon, $userlat);
             if (is_array($forweather) && array_key_exists("current", $forweather)) {
                 $data = [
                     "lon" => $userlon,

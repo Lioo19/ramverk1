@@ -62,11 +62,10 @@ class WeatherController implements ContainerInjectableInterface
         $userlon = $request->getPost("lon", null);
         $userlat = $request->getPost("lat", null);
 
-
         if ($userip) {
             $data = $this->getIpData($userip);
 
-            if (count($data) < 2 ) {
+            if (count($data) < 2) {
                 $page->add("weather/validationfail", $data);
             } else {
                 //data for map
@@ -81,7 +80,7 @@ class WeatherController implements ContainerInjectableInterface
         } elseif ($userlon && $userlat) {
             $data = $this->getPosData($userlon, $userlat);
 
-            if (count($data) < 2 ) {
+            if (count($data) < 2) {
                 $page->add("weather/validationfail", $data);
             } else {
                 $data2 = [
@@ -101,10 +100,10 @@ class WeatherController implements ContainerInjectableInterface
         return $page->render([
             "title" => $title,
         ]);
-
     }
 
-    private function getIPData($userip) {
+    private function getIPData($userip)
+    {
         $validation = $this->di->get("iptest");
         $validation->setInput($userip);
 
@@ -113,15 +112,12 @@ class WeatherController implements ContainerInjectableInterface
 
         if ($ip6 || $ip4) {
             $hostname = gethostbyaddr($userip);
-            $geo = $this->di->get("ipgeo");
-            $geo->setInput($userip);
-            $geoInfo = $geo->fetchGeo();
+            $geoInfo = $this->getGeo($userip);
             $lon = $geoInfo["longitude"];
             $lat = $geoInfo["latitude"];
             $map = new GeoMap($lon, $lat);
-            $weather = new Weather();
-            $forweather = $weather->fetchForecastWeather($lon, $lat);
-            $histweather = $weather->fetchHistoricalWeather($lon, $lat);
+            $forweather = $this->getWeather("forecast", $lon, $lat);
+            $histweather = $this->getWeather("historical", $lon, $lat);
         } else {
             $data = [
                 "message" => "Inkorrekt IP, försök igen",
@@ -142,13 +138,13 @@ class WeatherController implements ContainerInjectableInterface
         return $data;
     }
 
-    private function getPosData($userlon, $userlat) {
+    private function getPosData($userlon, $userlat)
+    {
         //check that lon/lat are valid floats
         if (floatval($userlon) != 0 && floatval($userlat) != 0) {
             $map = new GeoMap($userlon, $userlat);
-            $weather = new Weather();
-            $forweather = $weather->fetchForecastWeather($userlon, $userlat);
-            $histweather = $weather->fetchHistoricalWeather($userlon, $userlat);
+            $forweather = $this->getWeather("forecast", $userlon, $userlat);
+            $histweather = $this->getWeather("historical", $userlon, $userlat);
             if (is_array($forweather)) {
                 $data = [
                     "map" => $map,
@@ -166,5 +162,27 @@ class WeatherController implements ContainerInjectableInterface
         ];
 
         return $data;
+    }
+
+    public function getGeo($userip)
+    {
+        $geo = $this->di->get("ipgeo");
+        $geo->setInput($userip);
+        $geoInfo = $geo->fetchGeo();
+
+        return $geoInfo;
+    }
+
+    public function getWeather($which, $userlon, $userlat)
+    {
+        if ($which == "forecast") {
+            $weather = new Weather();
+            $forweather = $weather->fetchForecastWeather($userlon, $userlat);
+            return $forweather;
+        } else {
+            $weather = new Weather();
+            $histweather = $weather->fetchHistoricalWeather($userlon, $userlat);
+            return $histweather;
+        }
     }
 }

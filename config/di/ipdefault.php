@@ -5,11 +5,10 @@
 return [
     "services" => [
         "ipdefault" => [
-            "callback" => function() {
+            "callback" => function () {
                 $ipdefault = new \Lioo19\Models\IpDefault();
                 return $ipdefault;
             }
         ]
     ]
-]
- ?>
+];

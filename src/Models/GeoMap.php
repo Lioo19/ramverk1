@@ -16,7 +16,8 @@ class GeoMap
     * @return object|void
     *
     */
-    public function fetchMap($lon, $lat) {
+    public function fetchMap($lon, $lat)
+    {
         if (!empty($lon) && !empty($lat)) {
             $map = "https://www.openstreetmap.org/#map=13/$lat/$lon";
             return $map;

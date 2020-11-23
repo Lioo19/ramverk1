@@ -8,12 +8,11 @@ namespace Lioo19\Models;
  */
 class IpGeoMock extends IpGeo
 {
-
     /**
     * Class for mocking request to IPstack
     *
     */
-    public function fetchGeo() : array
+    public function fetchGeo($url = "khrfkjn")
     {
         $data = [
             "country" => "Sweden",

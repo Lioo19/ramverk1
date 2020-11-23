@@ -14,7 +14,7 @@ class GeoMapTest extends TestCase
 {
 
     /**
-     * Test ip4-function
+     * Test map success
      */
     public function testSuccessFetchMap()
     {
@@ -30,7 +30,7 @@ class GeoMapTest extends TestCase
     public function testFailFetchMap()
     {
         $geoMap = new GeoMap();
-        $res = $geoMap->fetchMap("17,17", "");
+        $res = $geoMap->fetchMap("17,17", null);
 
         $this->assertNull($res);
     }

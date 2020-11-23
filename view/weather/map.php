@@ -33,7 +33,7 @@ namespace Anax\View;
         .bindPopup('Din position')
         .openPopup();
     </script>
-<?php else: ?>
+<?php else : ?>
     <p><b>Din position går tyvärr inte att läsa ut på kartan</b></p>
 <?php endif; ?>
 

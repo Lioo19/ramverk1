@@ -25,7 +25,7 @@ class GeoControllerTest extends TestCase
         $di->loadServices(ANAX_INSTALL_PATH . "/config/di");
 
         // Create and initiate the controller
-        $this->controller = new GeoController();
+        $this->controller = new GeoControllerMock();
 
         $this->controller->setDi($di);
     }

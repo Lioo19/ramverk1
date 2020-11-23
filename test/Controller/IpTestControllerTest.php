@@ -25,7 +25,7 @@ class IpTestControllerTest extends TestCase
         $di->loadServices(ANAX_INSTALL_PATH . "/config/di");
 
         // Create and initiate the controller
-        $this->controller = new IpTestController();
+        $this->controller = new IpTestControllerMock();
 
         $this->controller->setDi($di);
     }

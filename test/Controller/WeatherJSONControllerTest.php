@@ -35,7 +35,7 @@ class WeatherJSONControllerTest extends TestCase
         $di = $this->di;
 
         // Setup the controller
-        $this->controller = new WeatherJSONController();
+        $this->controller = new WeatherJSONControllerMock();
         $this->controller->setDI($this->di);
     }
 
@@ -51,14 +51,14 @@ class WeatherJSONControllerTest extends TestCase
         $this->assertInternalType("array", $res);
 
         $json = $res[0];
-        $exp = "Inget";
+        $exp = "Inkorrekt";
         $this->assertContains($exp, $json["message"]);
     }
 
     /**
      * Test the route "index" with IP-get
      */
-    public function testIndexActionGetReqWithIp ()
+    public function testIndexActionGetReqWithIp()
     {
         global $di;
 
@@ -98,7 +98,7 @@ class WeatherJSONControllerTest extends TestCase
     /**
      * Test the route "index" with IP-get, failing
      */
-    public function testIndexActionGetReqWithIpFail ()
+    public function testIndexActionGetReqWithIpFail()
     {
         global $di;
 
@@ -124,7 +124,7 @@ class WeatherJSONControllerTest extends TestCase
         global $di;
 
         $req = $di->get("request");
-        $req->setGet("lon", "17777777777777");
+        $req->setGet("lon", "");
         $req->setGet("lat", "5.69");
 
         $res = $this->controller->indexActionGet();

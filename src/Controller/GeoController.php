@@ -66,9 +66,7 @@ class GeoController implements ContainerInjectableInterface
 
         if ($ip6 || $ip4) {
             $hostname = gethostbyaddr($userip);
-            $geo = $this->di->get("ipgeo");
-            $geo->setInput($userip);
-            $geoInfo = $geo->fetchGeo();
+            $geoInfo = $this->getGeo($userip);
         } else {
             $hostname = "Ej korrekt ip";
             $geoInfo = "Inget att visa";
@@ -89,27 +87,12 @@ class GeoController implements ContainerInjectableInterface
         ]);
     }
 
+    public function getGeo($userip)
+    {
+        $geo = $this->di->get("ipgeo");
+        $geo->setInput($userip);
+        $geoInfo = $geo->fetchGeo();
 
-
-//can I split all the functions?
-//     /**
-//      * POST for ip, redirects to result-page
-//      * Sends the ip-adress with post and redirects
-//      *
-//      * @return object
-//      */
-//     private function validateIP($userip) : object
-//     {
-//         $validation = new IpTest($userip);
-//         $ip4 = $validation->ip4test();
-//         $ip6 = $validation->ip6test();
-//
-//         $data = [
-//             "ip" => $userip,
-//             "ip4" => $ip4,
-//             "ip6" => $ip6,
-//         ];
-//
-//         return $data;
-//     }
+        return $geoInfo;
+    }
 }
