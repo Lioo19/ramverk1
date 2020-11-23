@@ -120,7 +120,7 @@ class WeatherController implements ContainerInjectableInterface
             $lat = $geoInfo["latitude"];
             $map = new GeoMap($lon, $lat);
             $weather = new Weather();
-            $currweather = $weather->fetchCurrentWeather($lon, $lat);
+            $forweather = $weather->fetchForecastWeather($lon, $lat);
             $histweather = $weather->fetchHistoricalWeather($lon, $lat);
         } else {
             $data = [
@@ -135,7 +135,7 @@ class WeatherController implements ContainerInjectableInterface
             "hostname" => $hostname,
             "geoInfo" => $geoInfo,
             "map" => $map,
-            "currweather" => $currweather,
+            "forweather" => $forweather,
             "histweather" => $histweather,
         ];
 
@@ -147,12 +147,12 @@ class WeatherController implements ContainerInjectableInterface
         if (floatval($userlon) != 0 && floatval($userlat) != 0) {
             $map = new GeoMap($userlon, $userlat);
             $weather = new Weather();
-            $currweather = $weather->fetchCurrentWeather($userlon, $userlat);
+            $forweather = $weather->fetchForecastWeather($userlon, $userlat);
             $histweather = $weather->fetchHistoricalWeather($userlon, $userlat);
-            if ($currweather["main"]) {
+            if (is_array($forweather)) {
                 $data = [
                     "map" => $map,
-                    "currweather" => $currweather,
+                    "forweather" => $forweather,
                     "histweather" => $histweather,
                     "lon" => $userlon,
                     "lat" => $userlat

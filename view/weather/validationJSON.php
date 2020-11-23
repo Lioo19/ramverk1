@@ -10,7 +10,7 @@ namespace Anax\View;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>IP-JSON</title>
+    <title>WEATHER-JSON</title>
 </head>
 
 </p>
@@ -20,6 +20,6 @@ if ($data) {
 }
 ?>
 
-
+<!--
 <pre>
-<?= var_dump($data); ?>
+<?= var_dump($data); ?> -->

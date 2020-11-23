@@ -63,7 +63,7 @@ class WeatherJSONController implements ContainerInjectableInterface
             $lon = $geoInfo["longitude"];
             $lat = $geoInfo["latitude"];
             $weather = new Weather();
-            $currweather = $weather->fetchCurrentWeather($lon, $lat);
+            $forweather = $weather->fetchForecastWeather($lon, $lat);
             $histweather = $weather->fetchHistoricalWeather($lon, $lat);
         } else {
             $data = [
@@ -78,9 +78,9 @@ class WeatherJSONController implements ContainerInjectableInterface
             "hostname" => $hostname,
             "geoInfo" => $geoInfo,
             "weathertoday" => [
-                "description" => $currweather["description"],
-                "temp" => number_format($currweather["temp"], 2),
-                "feels_like" => number_format($currweather["feels_like"], 2)
+                "description" => $forweather["description"],
+                "temp" => number_format($forweather["temp"], 2),
+                "feels_like" => number_format($forweather["feels_like"], 2)
                 ],
             "histweather" => [
                 "yesterday" => [
@@ -118,17 +118,45 @@ class WeatherJSONController implements ContainerInjectableInterface
         //check that lon/lat are valid floats
         if (floatval($userlon) != 0 && floatval($userlat) != 0) {
             $weather = new Weather();
-            $currweather = $weather->fetchCurrentWeather($userlon, $userlat);
+            $forweather = $weather->fetchForecastWeather($userlon, $userlat);
             $histweather = $weather->fetchHistoricalWeather($userlon, $userlat);
-            if (array_key_exists("main", $currweather)) {
+            if (is_array($forweather) && array_key_exists("current", $forweather)) {
                 $data = [
                     "lon" => $userlon,
                     "lat" => $userlat,
+                    // "whole" => $forweather,
                     "weathertoday" => [
-                        "description" => $currweather["description"],
-                        "temp" => number_format($currweather["temp"], 2),
-                        "feels_like" => number_format($currweather["feels_like"], 2)
+                        "description" => $forweather["current"]["weather"][0]["description"],
+                        "temp" => number_format($forweather["current"]["temp"], 2),
+                        "feels_like" => number_format($forweather["current"]["feels_like"], 2)
                         ],
+                    "forecast" => [
+                        "tomorrow" => [
+                            "description" => $forweather["daily"][0]["weather"][0]["description"],
+                            "temp" => number_format($forweather["daily"][0]["temp"]["day"], 2),
+                            "feels_like" => number_format($forweather["daily"][0]["feels_like"]["day"], 2)
+                        ],
+                        "in_2_days" => [
+                            "description" => $forweather["daily"][1]["weather"][0]["description"],
+                            "temp" => number_format($forweather["daily"][1]["temp"]["day"], 2),
+                            "feels_like" => number_format($forweather["daily"][1]["feels_like"]["day"], 2)
+                        ],
+                        "in_3_days" => [
+                            "description" => $forweather["daily"][2]["weather"][0]["description"],
+                            "temp" => number_format($forweather["daily"][2]["temp"]["day"], 2),
+                            "feels_like" => number_format($forweather["daily"][2]["feels_like"]["day"], 2)
+                        ],
+                        "in_4_days" => [
+                            "description" => $forweather["daily"][3]["weather"][0]["description"],
+                            "temp" => number_format($forweather["daily"][3]["temp"]["day"], 2),
+                            "feels_like" => number_format($forweather["daily"][3]["feels_like"]["day"], 2)
+                        ],
+                        "in_5_days" => [
+                            "description" => $forweather["daily"][4]["weather"][0]["description"],
+                            "temp" => number_format($forweather["daily"][4]["temp"]["day"], 2),
+                            "feels_like" => number_format($forweather["daily"][4]["feels_like"]["day"], 2)
+                        ],
+                    ],
                     "histweather" => [
                         "yesterday" => [
                             "description" => $histweather[0]["weather"][0]["description"],

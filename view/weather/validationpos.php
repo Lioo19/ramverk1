@@ -14,21 +14,43 @@ namespace Anax\View;
 </head>
 
 <h1>Vädret</h1>
-</p>
-<?php
-?>
+
+<h3>Vädret Just Nu</h3>
 <div id="currweather">
     <?php
-    if ($data["currweather"]) {
-        echo "<p>Vädret hos dig just nu är " . $data["currweather"]["description"];
-        echo "<br>Temperaturen är " . $data["currweather"]["temp"] .
-            " grader och det känns som " . $data["currweather"]["feels_like"] . "</p>";
+    if (is_array($data["forweather"]) && !array_key_exists("message", $data["forweather"])) {
+        echo "<p>Vädret hos dig just nu är " . $data["forweather"]["current"]["weather"][0]["description"];
+        echo "<br>Temperaturen är " . $data["forweather"]["current"]["temp"] .
+            " grader och det känns som " . $data["forweather"]["current"]["feels_like"] . "</p>";
     } else {
-        echo "<p>Tyvärr går det inte att visa vädret hos dig just nu</p>";
+        echo "<p>Tyvärr går det inte att visa vädret hos dig just nu.</p>";
     }?>
 </div>
+<h3>Kommande väder</h3>
+<div id="forweather">
+    <p>
+    <?php
+    if (is_array($data["forweather"]) && !array_key_exists("message", $data["forweather"])) {
+        echo "Imorgon blir det ca " . $data["forweather"]["daily"][0]["temp"]["day"] .
+            " grader och det blir " . $data["forweather"]["daily"][0]["weather"][0]["description"];
+        echo "<br>I övermorgon blir det ca " . $data["forweather"]["daily"][1]["temp"]["day"] .
+        " grader och det blir " . $data["forweather"]["daily"][1]["weather"][0]["description"];
+        echo "<br>Om tre dagar blir det ca " . $data["forweather"]["daily"][2]["temp"]["day"] .
+        " grader och det blir " . $data["forweather"]["daily"][2]["weather"][0]["description"];
+        echo "<br>Om fyra dagar blir det ca " . $data["forweather"]["daily"][3]["temp"]["day"] .
+        " grader och det blir " . $data["forweather"]["daily"][3]["weather"][0]["description"];
+        echo "<br>Om fem dagar blir det ca " . $data["forweather"]["daily"][4]["temp"]["day"] .
+        " grader och det blir " . $data["forweather"]["daily"][4]["weather"][0]["description"];
+    } else {
+        echo "Väderprognosen går ej att hämta.";
+    }?>
+    </p>
+</div>
+
+<h3>Historiskt väder</h3>
 
 <div id="histweather">
+    <p>
     <?php
     if (count($data["histweather"]) == 5) {
         echo "Igår var det " . $data["histweather"][0]["temp"] .
@@ -42,11 +64,12 @@ namespace Anax\View;
         echo "<br>För fem dagar sen var det " . $data["histweather"][4]["temp"] .
             " grader ute och det var " . $data["histweather"][4]["weather"][0]["description"];
     } else {
-        echo "Historiskt väder kan inte visas för dig, haha.";
+        echo "Historiskt väder kan inte visas för dig.";
     }?>
+    </p>
 </div>
 
 
-<pre>
+<!-- <pre>
     <?= var_dump($data); ?>
-    <?= var_dump($_POST); ?>
+    <?= var_dump($_POST); ?> -->

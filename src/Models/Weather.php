@@ -33,14 +33,15 @@ class Weather
     * @return object With parts of valid JSON-repsonse
     *
     */
-    public function fetchCurrentWeather(string $lon, string $lat, $url = "api.openweathermap.org/data/2.5/weather?lat=")
+    public function fetchForecastWeather($lon, $lat, $url = "api.openweathermap.org/data/2.5/onecall?lat=")
     {
         $curl = curl_init();
         $apikey = $this->getApikey();
         if (strlen($lon) > 0 && strlen($lat) > 0) {
 
             //sets the url for curl to the correct one
-            curl_setopt($curl, CURLOPT_URL, "$url" . $lat . "&lon=" . $lon . "&lang=se&units=metric&APPID=" . $apikey);
+            curl_setopt($curl, CURLOPT_URL, "$url" . $lat . "&lon=" . $lon .
+                        "&exclude=minutely,hourly&lang=se&units=metric&APPID=" . $apikey);
             //returns a string
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             //execute the started curl-session
@@ -54,13 +55,15 @@ class Weather
                 ];
                 return $data;
             }
-            $data = [
-                "main" => $exploded["weather"][0]["main"],
-                "description" => $exploded["weather"][0]["description"],
-                "temp" => $exploded["main"]["temp"],
-                "feels_like" => $exploded["main"]["feels_like"],
-                "wind" => $exploded["wind"]["speed"],
-            ];
+            $data = $exploded;
+
+            // $data = [
+            //     "main" => $exploded["weather"][0]["main"],
+            //     "description" => $exploded["weather"][0]["description"],
+            //     "temp" => $exploded["main"]["temp"],
+            //     "feels_like" => $exploded["main"]["feels_like"],
+            //     "wind" => $exploded["wind"]["speed"],
+            // ];
             //close curl-session to free up space
             curl_close($curl);
 
@@ -76,7 +79,7 @@ class Weather
     * Need to make five different API-calls, one for each day
     * how do I get the unix-time?
     */
-    public function fetchHistoricalWeather(string $lon, string $lat)
+    public function fetchHistoricalWeather($lon, $lat)
     {
         $apikey = $this->getApikey();
         $url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="
