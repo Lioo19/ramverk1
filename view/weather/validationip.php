@@ -84,6 +84,6 @@ if ($data["geoInfo"] == "Inget att visa") {
 </div>
 
 
-<pre>
+<!-- <pre>
     <?= var_dump($data); ?>
-    <?= var_dump($_POST); ?>
+    <?= var_dump($_POST); ?> -->

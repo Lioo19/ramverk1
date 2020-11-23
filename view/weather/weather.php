@@ -14,7 +14,8 @@ namespace Anax\View;
 </head>
 
 <h1> Vädret </h1>
-<p>Här kan du få ut ditt nuvarande väder, samt vädret för de fem föregående dagarna.
+<p>Här kan du få ut ditt nuvarande väder, prognos för de närmaste fem dagarna
+    samt vädret för de fem föregående dagarna.
 <br>Du väljer själv om du vill ange din ip-adress eller lon/lat.</p>
 
 <form method="POST" action="weather/validation">
