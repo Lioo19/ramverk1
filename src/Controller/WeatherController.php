@@ -47,7 +47,7 @@ class WeatherController implements ContainerInjectableInterface
     }
 
     /**
-     * POST for ip, redirects to result-page for weather
+     * Post for redirecting to final page of Weather, picking up given values
      * Sends the ip-adress with post and redirects
      *
      * @return object
