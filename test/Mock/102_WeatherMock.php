@@ -16,6 +16,7 @@ class WeatherMock extends Weather
     {
         if (strlen($lon) > 0 && strlen($lat) > 0) {
             $data = [
+                "url" => $url,
                 "current" => [
                     "dt" => "1606129253",
                     "temp" => "9.31",

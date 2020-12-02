@@ -9,7 +9,7 @@ namespace Anax\View;
 <?php if ($data["lat"] && $data["lon"]) : ?>
     <h4> Karta över ditt område</h4>
 
-    <div id="map">
+    <div id="map" style="width:100%;height:350px;">
     </div>
 
     <!-- Downloading leaflet library -->

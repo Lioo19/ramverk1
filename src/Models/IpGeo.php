@@ -11,7 +11,7 @@ class IpGeo
     * @var string $ipinput   userinputted ip
     * @var string $curl      curl-object
     */
-    private $ipinput;
+    public $ipinput;
     private $curl;
 
     /**

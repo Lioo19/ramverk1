@@ -19,7 +19,7 @@ class Weather
     * @return object with the different dates given in unix
     *
     */
-    private function getDate()
+    public function getDate()
     {
         $days = [];
         for ($i = 0; $i > -5; $i--) {

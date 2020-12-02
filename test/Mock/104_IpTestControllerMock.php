@@ -17,7 +17,7 @@ class IpTestControllerMock extends IpTestController
     public function getGeo($userip)
     {
         $ipGeo = new IpGeoMock();
-        $data = $ipGeo->fetchGeo();
+        $data = $ipGeo->fetchGeo($userip);
         return $data;
     }
 }

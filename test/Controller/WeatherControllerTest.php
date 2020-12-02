@@ -3,7 +3,6 @@
 namespace Lioo19\Controller;
 
 use Anax\DI\DIFactoryConfig;
-use Anax\DI\DIMagic;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,8 +20,12 @@ class WeatherControllerTest extends TestCase
         global $di;
 
         // Init service container $di to contain $app as a service
-        $di = new DIMagic();
+        $di = new DIFactoryConfig();
         $di->loadServices(ANAX_INSTALL_PATH . "/config/di");
+        $di->loadServices(ANAX_INSTALL_PATH . "/test/config_/di");
+
+        //set a test-cache for tests
+        $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
         // Create and initiate the controller
         $this->controller = new WeatherControllerMock();

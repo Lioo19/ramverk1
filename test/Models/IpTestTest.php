@@ -2,8 +2,6 @@
 
 namespace Lioo19\Models;
 
-use Anax\DI\DIFactoryConfig;
-use Anax\DI\DIMagic;
 use PHPUnit\Framework\TestCase;
 use Lioo19\Models\IpTest;
 

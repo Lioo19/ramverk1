@@ -35,7 +35,7 @@ class WeatherControllerMock extends WeatherController
     public function getGeo($userip)
     {
         $ipGeo = new IpGeoMock();
-        $data = $ipGeo->fetchGeo();
+        $data = $ipGeo->fetchGeo($userip);
         return $data;
     }
 }

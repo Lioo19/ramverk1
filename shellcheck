@@ -1,0 +1,9 @@
+#!/bin/sh
+exec >&2
+echo 'You are downloading ShellCheck from the wrong URL!'
+echo 'Please update to the latest one:'
+echo 'https://github.com/koalaman/shellcheck/releases/download/latest/shellcheck-latest.linux.x86_64.tar.xz'
+echo ''
+echo 'For more information, see:'
+echo 'https://github.com/koalaman/shellcheck/issues/1871'
+exit 1

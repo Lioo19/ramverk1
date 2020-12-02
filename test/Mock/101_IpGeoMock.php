@@ -15,6 +15,7 @@ class IpGeoMock extends IpGeo
     public function fetchGeo($url = "khrfkjn")
     {
         $data = [
+            "url" => $url,
             "country" => "Sweden",
             "city" => "Karlskrona",
             "latitude" => "56.16122055053711",
