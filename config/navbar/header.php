@@ -68,5 +68,10 @@ return [
             "url" => "weather",
             "title" => "Väder och location",
         ],
+        [
+            "text" => "Böcker",
+            "url" => "book/frontpage",
+            "title" => "Böcker",
+        ],
     ],
 ];

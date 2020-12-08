@@ -12,7 +12,9 @@
     },
     "require": {
         "anax/anax-ramverk1-me": "^1.0.0",
-        "lioo19/weathermodule": "^2.0"
+        "lioo19/weathermodule": "^2.0",
+        "anax/htmlform": "^2.0",
+        "anax/database-active-record": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7"

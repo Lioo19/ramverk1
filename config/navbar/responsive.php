@@ -55,11 +55,6 @@ return [
             "title" => "Om denna webbplats.",
         ],
         [
-            "text" => "Verktyg",
-            "url" => "verktyg",
-            "title" => "Verktyg och möjligheter för utveckling.",
-        ],
-        [
             "text" => "Ip-test",
             "url" => "ip",
             "title" => "Test för Ip-adress",
@@ -68,6 +63,11 @@ return [
             "text" => "Väder",
             "url" => "weather",
             "title" => "Väder och location",
+        ],
+        [
+            "text" => "Böcker",
+            "url" => "book/frontpage",
+            "title" => "Böcker",
         ],
     ],
 ];
