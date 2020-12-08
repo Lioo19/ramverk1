@@ -16,7 +16,7 @@ class Weather
 
     /**
     * Method for retriving the current date, and the five previous days
-    * @return object with the different dates given in unix
+    * @return array with the different dates given in unix
     *
     */
     public function getDate()
@@ -31,7 +31,6 @@ class Weather
 
     /**
     * Method for retriving the weather info, given coordinates
-    * @return object With parts of valid JSON-repsonse
     *
     */
     public function fetchForecastWeather($lon, $lat, $url = "api.openweathermap.org/data/2.5/onecall?lat=")

@@ -26,7 +26,7 @@ class IpGeo
 
     /**
     * Method for retriving the geo-coordinates for given ip-address
-    * @return object With parts of valid JSON-repsonse
+    * @return array With parts of valid JSON-repsonse
     */
     public function fetchGeo($url = "http://api.ipstack.com/")
     {
