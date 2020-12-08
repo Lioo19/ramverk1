@@ -18,34 +18,35 @@ $urlToDelete = url("book/delete");
 
 
 ?><h1>Visar alla böcker</h1>
+<div style="height: 400px;">
+    <p>
+        <a href="<?= $urlToCreate ?>">Skapa ny</a> |
+        <a href="<?= $urlToDelete ?>">Radera</a>
+    </p>
 
-<p>
-    <a href="<?= $urlToCreate ?>">Skapa ny</a> |
-    <a href="<?= $urlToDelete ?>">Radera</a>
-</p>
+    <?php if (!$items) : ?>
+        <p>Inga böcker att visa</p>
+        <?php
+        return;
+    endif;
+    ?>
 
-<?php if (!$items) : ?>
-    <p>Inga böcker att visa</p>
-    <?php
-    return;
-endif;
-?>
-
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Titel</th>
-        <th>Författare</th>
-        <th>Bild</th>
-    </tr>
-    <?php foreach ($items as $item) : ?>
-    <tr>
-        <td>
-            <a href="<?= url("book/update/{$item->id}"); ?>"><?= $item->id ?></a>
-        </td>
-        <td><?= $item->title ?></td>
-        <td><?= $item->author ?></td>
-        <td><a href="<?= $item->image ?>">Bild för <?= $item->title?></td>
-    </tr>
-    <?php endforeach; ?>
-</table>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Titel</th>
+            <th>Författare</th>
+            <th>Bild</th>
+        </tr>
+        <?php foreach ($items as $item) : ?>
+        <tr>
+            <td>
+                <a href="<?= url("book/update/{$item->id}"); ?>"><?= $item->id ?></a>
+            </td>
+            <td><?= $item->title ?></td>
+            <td><?= $item->author ?></td>
+            <td><a href="<?= $item->image ?>">Bild för <?= $item->title?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
