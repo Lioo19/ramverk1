@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Configuration file for view container.
  */
+
 return [
     // Paths to look for views, without ending slash.
     "paths" => [

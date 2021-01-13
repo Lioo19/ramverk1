@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Config file for url.
  */
+
 #
 if (!defined("ANAX_PRODUCTION")) {
     // For development environment

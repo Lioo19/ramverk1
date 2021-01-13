@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Create a collection of views.
  */
+
 return [
     "services" => [
         "view" => [

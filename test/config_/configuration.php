@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Configuration file to the configuration object which helps in reading
  * configuration files.

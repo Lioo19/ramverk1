@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Creating the session as a $di service.
  */
+
 return [
     // Services to add to the container.
     "services" => [

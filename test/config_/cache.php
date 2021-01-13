@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Config file for the Anax Cache module.
  */
+
 return [
     // Use for styling the menu
     //"basePath" => ANAX_APP_PATH . "/cache",

@@ -3,7 +3,6 @@
 namespace Lioo19\Controller;
 
 use Anax\DI\DIFactoryConfig;
-
 use PHPUnit\Framework\TestCase;
 
 /**
